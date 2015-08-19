@@ -7,6 +7,12 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.BottomAppBar>
+        <CommandBar>
+            <AppBarButton Icon="Mail" Label="mail"/>
+            <AppBarButton Icon="Message" Label="sms"/>
+        </CommandBar>
+    </Page.BottomAppBar>
 
     <Grid x:Name="LayoutRoot">
 
@@ -21,15 +27,24 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- Title Panel -->
-        <StackPanel Grid.Row="0" Margin="19,0,0,0">
-            <TextBlock Text="MY APPLICATION" Style="{ThemeResource TitleTextBlockStyle}" Margin="0,12,0,0"/>
-            <TextBlock Text="page title" Margin="0,-6.5,0,26.5" Style="{ThemeResource HeaderTextBlockStyle}" CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}"/>
-        </StackPanel>
-
         <!--TODO: Content should be placed within the following grid-->
-        <Grid Grid.Row="1" x:Name="ContentRoot" Margin="19,9.5,19,0">
-
-        </Grid>
+        <StackPanel Grid.Row="1" x:Name="ContentRoot" Margin="12, 12">
+            <TextBox Height="120" Header="Input Text:"/>
+            <TextBlock Text="Coding mode:" FontSize="18"/>
+            <StackPanel Orientation="Horizontal">
+                <RadioButton Content="Binary"/>
+                <RadioButton Content="Hex"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <RadioButton Content="Base64"/>
+                <RadioButton Content="Url"/>
+            </StackPanel>
+            <TextBlock Text="Coding options:" FontSize="18"/>
+            <StackPanel Orientation="Horizontal">
+                <RadioButton Content="Decode"/>
+                <RadioButton Content="Encode"/>
+            </StackPanel>
+            <TextBox x:Name="TextBox_Out" Header="Output text:" Height="120"/>
+        </StackPanel>
     </Grid>
 </Page>
