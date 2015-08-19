@@ -14,37 +14,46 @@
         </CommandBar>
     </Page.BottomAppBar>
 
-    <Grid x:Name="LayoutRoot">
+    <ScrollViewer>
 
-        <Grid.ChildrenTransitions>
-            <TransitionCollection>
-                <EntranceThemeTransition/>
-            </TransitionCollection>
-        </Grid.ChildrenTransitions>
+        <Grid x:Name="LayoutRoot" ScrollViewer.VerticalScrollMode="Enabled">
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
+            <Grid.ChildrenTransitions>
+                <TransitionCollection>
+                    <EntranceThemeTransition/>
+                </TransitionCollection>
+            </Grid.ChildrenTransitions>
 
-        <!--TODO: Content should be placed within the following grid-->
-        <StackPanel Grid.Row="1" x:Name="ContentRoot" Margin="12, 12">
-            <TextBox Height="120" Header="Input Text:"/>
-            <TextBlock Text="Coding mode:" FontSize="18"/>
-            <StackPanel Orientation="Horizontal">
-                <RadioButton Content="Binary"/>
-                <RadioButton Content="Hex"/>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!--TODO: Content should be placed within the following grid-->
+            <StackPanel Grid.Row="1" x:Name="ContentRoot" Margin="12, 12">
+                <TextBox x:Name="TextBox_Input" Height="120" Header="Input Text:" 
+                         TextWrapping="Wrap"
+                         ScrollViewer.VerticalScrollMode="Enabled"/>
+                <TextBlock Text="Coding mode:" FontSize="20"/>
+                <StackPanel Orientation="Horizontal">
+                    <RadioButton Content="Base64" Tag="Base64"  GroupName="Mode" IsChecked="True"/>
+                    <RadioButton Content="Hex" Tag="Hex" GroupName="Mode"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <RadioButton Content="Binary" Tag="Binary" GroupName="Mode"/>
+                    <RadioButton Content="Ascii" GroupName="Mode"/>
+                </StackPanel>
+                <TextBlock Text="Coding options:" FontSize="20"/>
+                <StackPanel Orientation="Horizontal">
+                    <RadioButton Content="Encode" GroupName="Option" IsChecked="True"/>
+                    <RadioButton Content="Decode" GroupName="Option"/>
+                </StackPanel>
+                <TextBlock Text="Output text:" FontSize="20"/>
+                <Border BorderThickness="1" BorderBrush="White" Margin="0,8">
+                    <TextBlock Margin="6" Text="{Binding ElementName=TextBox_Input, Path=Text}" 
+                           TextWrapping="Wrap" FontSize="18"/>
+                </Border>
             </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <RadioButton Content="Base64"/>
-                <RadioButton Content="Url"/>
-            </StackPanel>
-            <TextBlock Text="Coding options:" FontSize="18"/>
-            <StackPanel Orientation="Horizontal">
-                <RadioButton Content="Decode"/>
-                <RadioButton Content="Encode"/>
-            </StackPanel>
-            <TextBox x:Name="TextBox_Out" Header="Output text:" Height="120"/>
-        </StackPanel>
-    </Grid>
+        </Grid>
+    </ScrollViewer>
 </Page>
