@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Text;
 using Windows.Security.Cryptography;
 using Windows.Storage.Streams;
+using System.Runtime.InteropServices.WindowsRuntime;
+using System.Linq;
 
-namespace Base64Universal
+namespace Base64Universal.Utilities
 {
     public class HelperMethods
     {
+        #region base64
         /// <summary>
         /// Encode the input parameter to base64 and return it as a string.
         /// </summary>
@@ -37,8 +40,9 @@ namespace Base64Universal
             }
             return string.Empty;
         }
+        #endregion
 
-
+        #region hex
         /// <summary>
         /// Converts the input parameter from string to Hex
         /// </summary>
@@ -85,20 +89,52 @@ namespace Base64Universal
         /// Checks if the input parameter is valid hex
         /// </summary>
         /// <param name="chars"></param>
-        /// <returns></returns>
+        /// <returns>
+        /// <c>true</c> if the specified chars are hex; otherwise, <c>false</c>.
+        /// </returns>
         private static bool IsHex(IEnumerable<char> chars)
         {
-            bool isHex;
             foreach (var c in chars)
             {
-                isHex = ((c >= '0' && c <= '9') ||
-                         (c >= 'a' && c <= 'f') ||
-                         (c >= 'A' && c <= 'F'));
-
-                if (!isHex)
+                if (!c.IsHex())
                     return false;
             }
             return true;
         }
+        #endregion
+
+        #region binary
+        public static string ToBinary(string plainText)
+        {
+            if (!string.IsNullOrEmpty(plainText))
+            {
+                var plainTextBytes = Encoding.Unicode.GetBytes(plainText);
+                return string.Join("", plainText.Select(byt => Convert.ToString(byt, 2).PadLeft(8, '0')));
+            }
+            return string.Empty;
+        }
+
+        public static string FromBinary(string plainText)
+        {
+            if (!string.IsNullOrEmpty(plainText))
+            {
+                var plainTextBytes = new List<Byte>();
+                //return Encoding.Unicode.GetString(plainTextBytes, 0, plainTextBytes.Length);
+                //return string.Join("", plainText.Select(byt => Convert.ToString(byt, 2).PadLeft(8, '0')));
+
+                for (int i = 0; i < plainText.Length; i += 8)
+                {
+                    plainTextBytes.Add(Convert.ToByte(plainText.Substring(i, 8), 2));
+                }
+                return Encoding.Unicode.GetString(plainTextBytes.ToArray(), 0, plainTextBytes.Count);
+
+            }
+            return string.Empty;
+        }
+        #endregion
+
+        #region ascii
+
+        #endregion
     }
 }

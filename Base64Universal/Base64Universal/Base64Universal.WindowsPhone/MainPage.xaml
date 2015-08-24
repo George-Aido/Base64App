@@ -3,57 +3,92 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Base64Universal"
+    xmlns:converters="using:Base64Universal.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.Resources>
+        <converters:StringToVisibilityConverter x:Key="StringToVisibilityConverter"/>
+    </Page.Resources>
+
     <Page.BottomAppBar>
         <CommandBar>
-            <AppBarButton Icon="Mail" Label="mail"/>
-            <AppBarButton Icon="Message" Label="sms"/>
+            <CommandBar.SecondaryCommands>
+                <AppBarButton x:Name="AppBarButton_About" Label="about"/>
+                <AppBarButton x:Name="AppBarButton_Rate" Label="rate/review"/>
+                <AppBarButton x:Name="AppBarButton_OtherApps" Label="other apps"/>
+            </CommandBar.SecondaryCommands>
+            <AppBarButton x:Name="AppBarButton_Convert" Label="convert">
+                <AppBarButton.Icon>
+                    <FontIcon Glyph="&#xE201;" FontFamily="Segoe UI Symbol"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
+            <AppBarButton x:Name="AppBarButton_Mail" Icon="Mail" Label="mail"/>
+            <AppBarButton x:Name="AppBarButton_Sms" Icon="Message" Label="sms"/>
         </CommandBar>
     </Page.BottomAppBar>
 
-    <ScrollViewer>
-
-        <Grid x:Name="LayoutRoot" ScrollViewer.VerticalScrollMode="Enabled">
-
-            <Grid.ChildrenTransitions>
-                <TransitionCollection>
-                    <EntranceThemeTransition/>
-                </TransitionCollection>
-            </Grid.ChildrenTransitions>
-
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-
-            <!--TODO: Content should be placed within the following grid-->
-            <StackPanel Grid.Row="1" x:Name="ContentRoot" Margin="12, 12">
-                <TextBox x:Name="TextBox_Input" Height="120" Header="Input Text:" 
+    <Pivot x:Name="Pivot">
+        <PivotItem Header="Text">
+            <ScrollViewer>
+                <!--TODO: Content should be placed within the following grid-->
+                <StackPanel x:Name="ContentRoot">
+                    <TextBlock Text="Input Text:" FontSize="20"/>
+                    <TextBox x:Name="TextBox_InputText" Height="100"
                          TextWrapping="Wrap"
                          ScrollViewer.VerticalScrollMode="Enabled"/>
-                <TextBlock Text="Coding mode:" FontSize="20"/>
-                <StackPanel Orientation="Horizontal">
-                    <RadioButton Content="Base64" Tag="Base64"  GroupName="Mode" IsChecked="True"/>
-                    <RadioButton Content="Hex" Tag="Hex" GroupName="Mode"/>
+                    <TextBlock Text="Coding mode:" FontSize="20"/>
+                    <StackPanel Orientation="Horizontal">
+                        <RadioButton Content="Base64" Tag="Base64"  GroupName="Mode" IsChecked="True"/>
+                        <RadioButton Content="Hex" Tag="Hex" GroupName="Mode"/>
+                    </StackPanel>
+                    <TextBlock Text="Coding options:" FontSize="20"/>
+                    <StackPanel Orientation="Horizontal">
+                        <RadioButton Content="Encode" GroupName="Option" IsChecked="True"/>
+                        <RadioButton Content="Decode" GroupName="Option"/>
+                    </StackPanel>
+                    <TextBlock Text="Output text:" FontSize="20"/>
+                    <Border BorderThickness="1" BorderBrush="White" Margin="0,8"
+                        Visibility="{Binding ElementName=TextBox_InputText, Path=Text, Converter={StaticResource StringToVisibilityConverter}}">
+                        <TextBlock Margin="6" Text="{Binding ElementName=TextBox_InputText, Path=Text}" 
+                           TextWrapping="Wrap" FontSize="18" IsTextSelectionEnabled="True"/>
+                    </Border>
                 </StackPanel>
-                <StackPanel Orientation="Horizontal">
-                    <RadioButton Content="Binary" Tag="Binary" GroupName="Mode"/>
-                    <RadioButton Content="Ascii" GroupName="Mode"/>
+            </ScrollViewer>
+        </PivotItem>
+        <PivotItem Header="Number">
+            <ScrollViewer>
+                <!--TODO: Content should be placed within the following grid-->
+                <StackPanel x:Name="ContentRootNumber">
+                    <TextBlock Text="Input Text:" FontSize="20"/>
+                    <TextBox x:Name="TextBox_InputNumber" Height="100"
+                         TextWrapping="Wrap"
+                         ScrollViewer.VerticalScrollMode="Enabled"/>
+                    <TextBlock Text="Coding mode:" FontSize="20"/>
+                    <StackPanel Orientation="Horizontal">
+                        <RadioButton Content="Base64" Tag="Base64"  GroupName="Mode2" IsChecked="True"/>
+                        <RadioButton Content="Hex" Tag="Hex" GroupName="Mode2"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <RadioButton Content="Binary" Tag="Binary" GroupName="Mode2"/>
+                        <RadioButton Content="Ascii" GroupName="Mode2"/>
+                    </StackPanel>
+                    <TextBlock Text="Coding options:" FontSize="20"/>
+                    <StackPanel Orientation="Horizontal">
+                        <RadioButton Content="Encode" GroupName="Option2" IsChecked="True"/>
+                        <RadioButton Content="Decode" GroupName="Option2"/>
+                    </StackPanel>
+                    <TextBlock Text="Output text:" FontSize="20"/>
+                    <Border BorderThickness="1" BorderBrush="White" Margin="0,8"
+                        Visibility="{Binding ElementName=TextBox_InputNumber, Path=Text, Converter={StaticResource StringToVisibilityConverter}}">
+                        <TextBlock Margin="6" Text="{Binding ElementName=TextBox_InputNumber, Path=Text}" 
+                           TextWrapping="Wrap" FontSize="18"
+                                   IsTextSelectionEnabled="True"/>
+                    </Border>
                 </StackPanel>
-                <TextBlock Text="Coding options:" FontSize="20"/>
-                <StackPanel Orientation="Horizontal">
-                    <RadioButton Content="Encode" GroupName="Option" IsChecked="True"/>
-                    <RadioButton Content="Decode" GroupName="Option"/>
-                </StackPanel>
-                <TextBlock Text="Output text:" FontSize="20"/>
-                <Border BorderThickness="1" BorderBrush="White" Margin="0,8">
-                    <TextBlock Margin="6" Text="{Binding ElementName=TextBox_Input, Path=Text}" 
-                           TextWrapping="Wrap" FontSize="18"/>
-                </Border>
-            </StackPanel>
-        </Grid>
-    </ScrollViewer>
+            </ScrollViewer>
+        </PivotItem>
+    </Pivot>
 </Page>
