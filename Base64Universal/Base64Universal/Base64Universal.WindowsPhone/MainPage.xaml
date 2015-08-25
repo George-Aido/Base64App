@@ -4,13 +4,19 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Base64Universal"
     xmlns:converters="using:Base64Universal.Converters"
+    xmlns:viewmodels="using:Base64Universal.ViewModels"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
+    <Page.DataContext>
+        <viewmodels:MainPageViewModel/>
+    </Page.DataContext>
     <Page.Resources>
         <converters:StringToVisibilityConverter x:Key="StringToVisibilityConverter"/>
+        <converters:CodingBaseEnumConverter x:Key="CodingBaseEnumConverter"/>
+        <converters:CodingModeEnumConverter x:Key="CodingModeEnumConverter"/>
+        <!--<viewmodels:MainPageViewModel x:Key="ViewModel"/>-->
     </Page.Resources>
 
     <Page.BottomAppBar>
@@ -20,13 +26,13 @@
                 <AppBarButton x:Name="AppBarButton_Rate" Label="rate/review"/>
                 <AppBarButton x:Name="AppBarButton_OtherApps" Label="other apps"/>
             </CommandBar.SecondaryCommands>
-            <AppBarButton x:Name="AppBarButton_Convert" Label="convert">
+            <AppBarButton x:Name="AppBarButton_Convert" Label="convert" Command="{Binding ConvertToBaseCommand}">
                 <AppBarButton.Icon>
                     <FontIcon Glyph="&#xE201;" FontFamily="Segoe UI Symbol"/>
                 </AppBarButton.Icon>
             </AppBarButton>
             <AppBarButton x:Name="AppBarButton_Mail" Icon="Mail" Label="mail"/>
-            <AppBarButton x:Name="AppBarButton_Sms" Icon="Message" Label="sms"/>
+            <!--<AppBarButton x:Name="AppBarButton_Sms" Icon="Message" Label="sms"/>-->
         </CommandBar>
     </Page.BottomAppBar>
 
@@ -38,21 +44,36 @@
                     <TextBlock Text="Input Text:" FontSize="20"/>
                     <TextBox x:Name="TextBox_InputText" Height="100"
                          TextWrapping="Wrap"
-                         ScrollViewer.VerticalScrollMode="Enabled"/>
+                         ScrollViewer.VerticalScrollMode="Enabled"
+                             Text="{Binding InputText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     <TextBlock Text="Coding mode:" FontSize="20"/>
                     <StackPanel Orientation="Horizontal">
-                        <RadioButton Content="Base64" Tag="Base64"  GroupName="Mode" IsChecked="True"/>
-                        <RadioButton Content="Hex" Tag="Hex" GroupName="Mode"/>
+                        <RadioButton Content="Base64" Tag="Base64"  
+                                     GroupName="Mode" 
+                                     IsChecked="{Binding Path=BaseCode, Converter={StaticResource CodingBaseEnumConverter}, 
+                            ConverterParameter=Base64,
+                            Mode=TwoWay}"/>
+                        <RadioButton Content="Hex" Tag="Hex" GroupName="Mode"
+                                     IsChecked="{Binding Path=BaseCode, Converter={StaticResource CodingBaseEnumConverter}, 
+                            ConverterParameter=Hex,
+                            Mode=TwoWay}"/>
                     </StackPanel>
                     <TextBlock Text="Coding options:" FontSize="20"/>
                     <StackPanel Orientation="Horizontal">
-                        <RadioButton Content="Encode" GroupName="Option" IsChecked="True"/>
-                        <RadioButton Content="Decode" GroupName="Option"/>
+                        <RadioButton Content="Encode" GroupName="Option"
+                                     IsChecked="{Binding Path=CodingMode, Converter={StaticResource CodingModeEnumConverter}, 
+                            ConverterParameter=Encode,
+                            Mode=TwoWay}"/>
+                        <RadioButton Content="Decode" GroupName="Option"
+                                     IsChecked="{Binding Path=CodingMode, Converter={StaticResource CodingModeEnumConverter}, 
+                            ConverterParameter=Decode,
+                            Mode=TwoWay}"/>
                     </StackPanel>
                     <TextBlock Text="Output text:" FontSize="20"/>
                     <Border BorderThickness="1" BorderBrush="White" Margin="0,8"
-                        Visibility="{Binding ElementName=TextBox_InputText, Path=Text, Converter={StaticResource StringToVisibilityConverter}}">
-                        <TextBlock Margin="6" Text="{Binding ElementName=TextBox_InputText, Path=Text}" 
+                        Visibility="{Binding ElementName=TextBlock_Output, 
+                        Path=Text, Converter={StaticResource StringToVisibilityConverter}}">
+                        <TextBlock x:Name="TextBlock_Output" Margin="6" Text="{Binding OutputText}" 
                            TextWrapping="Wrap" FontSize="18" IsTextSelectionEnabled="True"/>
                     </Border>
                 </StackPanel>
@@ -65,7 +86,8 @@
                     <TextBlock Text="Input Text:" FontSize="20"/>
                     <TextBox x:Name="TextBox_InputNumber" Height="100"
                          TextWrapping="Wrap"
-                         ScrollViewer.VerticalScrollMode="Enabled"/>
+                         ScrollViewer.VerticalScrollMode="Enabled"
+                             Text="{Binding InputText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     <TextBlock Text="Coding mode:" FontSize="20"/>
                     <StackPanel Orientation="Horizontal">
                         <RadioButton Content="Base64" Tag="Base64"  GroupName="Mode2" IsChecked="True"/>
@@ -83,7 +105,7 @@
                     <TextBlock Text="Output text:" FontSize="20"/>
                     <Border BorderThickness="1" BorderBrush="White" Margin="0,8"
                         Visibility="{Binding ElementName=TextBox_InputNumber, Path=Text, Converter={StaticResource StringToVisibilityConverter}}">
-                        <TextBlock Margin="6" Text="{Binding ElementName=TextBox_InputNumber, Path=Text}" 
+                        <TextBlock Margin="6" Text="{Binding Path=OutputText}" 
                            TextWrapping="Wrap" FontSize="18"
                                    IsTextSelectionEnabled="True"/>
                     </Border>

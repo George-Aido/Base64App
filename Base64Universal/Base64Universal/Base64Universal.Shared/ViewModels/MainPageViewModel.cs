@@ -1,36 +1,124 @@
-﻿using System;
+﻿using Base64Universal.Common;
+using Base64Universal.Enums;
+using Base64Universal.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Input;
 
 namespace Base64Universal.ViewModels
 {
     public class MainPageViewModel : ViewModelBase
     {
-        private string decodedText;
-        public string DecodedText
+        private CodingBaseEnum baseCode;
+        public CodingBaseEnum BaseCode
         {
-            get { return decodedText; }
+            get { return baseCode; }
             set
             {
-                if (value != decodedText)
+                if (value != baseCode)
                 {
-                    decodedText = value;
+                    baseCode = value;
                     NotifyPropertyChanged();
                 }
             }
         }
 
-        private string encodedText;
-        public string EncodedText
+        private CodingModeEnum codingMode;
+        public CodingModeEnum CodingMode
         {
-            get { return encodedText; }
+            get { return codingMode; }
             set
             {
-                if (value != encodedText)
+                if (value != codingMode)
                 {
-                    encodedText = value;
+                    codingMode = value;
                     NotifyPropertyChanged();
                 }
+            }
+        }
+
+
+        private string inputText;
+        public string InputText
+        {
+            get { return inputText; }
+            set
+            {
+                if (value != inputText)
+                {
+                    inputText = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        private string outputText;
+        public string OutputText
+        {
+            get { return outputText; }
+            set
+            {
+                if (value != outputText)
+                {
+                    outputText = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        public MainPageViewModel()
+        {
+            ConvertToBaseCommand = new RelayCommand(EncodeOrDecode);
+        }
+
+
+        public ICommand ConvertToBaseCommand
+        {
+            get;
+            private set;
+        }
+        private void EncodeOrDecode()
+        {
+            switch (CodingMode)
+            {
+                case CodingModeEnum.Encode:
+                    OutputText = ToBase();
+                    break;
+                case CodingModeEnum.Decode:
+                    OutputText = FromBase();
+                    break;
+                default:
+                    // something went wrong. return...
+                    return;
+            }
+        }
+
+        private string ToBase()
+        {
+            switch (BaseCode)
+            {
+                case CodingBaseEnum.Base64:
+                    return HelperMethods.ToBase64(InputText);
+                case CodingBaseEnum.Hex:
+                    return HelperMethods.ToHex(InputText);
+                default:
+                    // something went wrong. return...
+                    return "Input text is not in correct format";
+            }
+        }
+
+        private string FromBase()
+        {
+            switch (BaseCode)
+            {
+                case CodingBaseEnum.Base64:
+                    return HelperMethods.FromBase64(InputText);
+                case CodingBaseEnum.Hex:
+                    return HelperMethods.FromHex(InputText);
+                default:
+                    // something went wrong. return...
+                    return "Input text is not in correct format";
             }
         }
     }

@@ -16,7 +16,7 @@ namespace Base64Universal.Utilities
         /// </summary>
         /// <param name="plainText">The string parameter that needs encoding</param>
         /// <returns></returns>
-        public static string Base64Encode(string plainText)
+        public static string ToBase64(string plainText)
         {
             if (!string.IsNullOrEmpty(plainText))
             {
@@ -31,7 +31,7 @@ namespace Base64Universal.Utilities
         /// </summary>
         /// <param name="base64EncodedData">The string parameter that needs decoding</param>
         /// <returns></returns>
-        public static string Base64Decode(string base64EncodedData)
+        public static string FromBase64(string base64EncodedData)
         {
             if (!string.IsNullOrEmpty(base64EncodedData))
             {
@@ -50,7 +50,7 @@ namespace Base64Universal.Utilities
         /// <returns>The encoded output</returns>
         public static string ToHex(string plainText)
         {
-            if (!string.IsNullOrEmpty(plainText) && IsHex(plainText))
+            if (!string.IsNullOrEmpty(plainText))
             {
                 var plainTextBytes = Encoding.UTF8.GetBytes(plainText);
                 // remove dashes from hex string
@@ -69,7 +69,7 @@ namespace Base64Universal.Utilities
             // null checking and verify if valid hex
             if (!string.IsNullOrEmpty(plainText))
             {
-                plainText = plainText.Replace("-", "");
+                //plainText = plainText.Replace("-", "");
                 if (IsHex(plainText.ToCharArray()))
                 {
                     // remeber that each byte is two digits in hex
