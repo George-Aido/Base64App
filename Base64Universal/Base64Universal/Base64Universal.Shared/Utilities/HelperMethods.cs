@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Text;
 using Windows.Security.Cryptography;
 using Windows.Storage.Streams;
+using System.Runtime.InteropServices.WindowsRuntime;
+using System.Linq;
 
-namespace Base64Universal
+namespace Base64Universal.Utilities
 {
     public class HelperMethods
     {
+        #region base64
         /// <summary>
         /// Encode the input parameter to base64 and return it as a string.
         /// </summary>
@@ -37,8 +40,9 @@ namespace Base64Universal
             }
             return string.Empty;
         }
+        #endregion
 
-
+        #region hex
         /// <summary>
         /// Converts the input parameter from string to Hex
         /// </summary>
@@ -46,7 +50,7 @@ namespace Base64Universal
         /// <returns>The encoded output</returns>
         public static string ToHex(string plainText)
         {
-            if (!string.IsNullOrEmpty(plainText))
+            if (!string.IsNullOrEmpty(plainText) && IsHex(plainText))
             {
                 var plainTextBytes = Encoding.UTF8.GetBytes(plainText);
                 // remove dashes from hex string
@@ -82,23 +86,21 @@ namespace Base64Universal
         }
 
         /// <summary>
-        /// Checks if the input parameter is valid hex
+        /// Checks if the input string is valid hex
         /// </summary>
         /// <param name="chars"></param>
-        /// <returns></returns>
+        /// <returns>
+        /// <c>true</c> if the specified string is hex; otherwise, <c>false</c>.
+        /// </returns>
         private static bool IsHex(IEnumerable<char> chars)
         {
-            bool isHex;
             foreach (var c in chars)
             {
-                isHex = ((c >= '0' && c <= '9') ||
-                         (c >= 'a' && c <= 'f') ||
-                         (c >= 'A' && c <= 'F'));
-
-                if (!isHex)
+                if (!c.IsHex())
                     return false;
             }
             return true;
         }
+        #endregion
     }
 }
