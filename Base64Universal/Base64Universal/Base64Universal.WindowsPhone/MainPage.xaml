@@ -16,7 +16,6 @@
         <converters:StringToVisibilityConverter x:Key="StringToVisibilityConverter"/>
         <converters:CodingBaseEnumConverter x:Key="CodingBaseEnumConverter"/>
         <converters:CodingModeEnumConverter x:Key="CodingModeEnumConverter"/>
-        <!--<viewmodels:MainPageViewModel x:Key="ViewModel"/>-->
     </Page.Resources>
 
     <Page.BottomAppBar>
@@ -39,14 +38,13 @@
     <Pivot x:Name="Pivot">
         <PivotItem Header="Text">
             <ScrollViewer>
-                <!--TODO: Content should be placed within the following grid-->
                 <StackPanel x:Name="ContentRoot">
                     <TextBlock Text="Input Text:" FontSize="20"/>
                     <TextBox x:Name="TextBox_InputText" Height="100"
                          TextWrapping="Wrap"
                          ScrollViewer.VerticalScrollMode="Enabled"
                              Text="{Binding InputText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    <TextBlock Text="Coding mode:" FontSize="20"/>
+                    <TextBlock Text="Coding base:" FontSize="20"/>
                     <StackPanel Orientation="Horizontal">
                         <RadioButton Content="Base64" Tag="Base64"  
                                      GroupName="Mode" 
@@ -81,28 +79,27 @@
         </PivotItem>
         <PivotItem Header="Number">
             <ScrollViewer>
-                <!--TODO: Content should be placed within the following grid-->
                 <StackPanel x:Name="ContentRootNumber">
-                    <TextBlock Text="Input Text:" FontSize="20"/>
+                    <TextBlock Text="Input Number:" FontSize="20"/>
                     <TextBox x:Name="TextBox_InputNumber" Height="100"
-                         TextWrapping="Wrap"
+                         TextWrapping="Wrap" InputScope="Number"
                          ScrollViewer.VerticalScrollMode="Enabled"
                              Text="{Binding InputText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    <TextBlock Text="Coding mode:" FontSize="20"/>
+                    <TextBlock Text="Coding base:" FontSize="20"/>
                     <StackPanel Orientation="Horizontal">
-                        <RadioButton Content="Base64" Tag="Base64"  GroupName="Mode2" IsChecked="True"/>
-                        <RadioButton Content="Hex" Tag="Hex" GroupName="Mode2"/>
+                        <RadioButton Content="Hex" Tag="Hex"  GroupName="Mode2" IsChecked="True"/>
+                        <RadioButton Content="Octal" Tag="Octal" GroupName="Mode2"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
+                        <RadioButton Content="Decimal" Tag="Decimal" GroupName="Mode2"/>
                         <RadioButton Content="Binary" Tag="Binary" GroupName="Mode2"/>
-                        <RadioButton Content="Ascii" GroupName="Mode2"/>
                     </StackPanel>
                     <TextBlock Text="Coding options:" FontSize="20"/>
                     <StackPanel Orientation="Horizontal">
                         <RadioButton Content="Encode" GroupName="Option2" IsChecked="True"/>
                         <RadioButton Content="Decode" GroupName="Option2"/>
                     </StackPanel>
-                    <TextBlock Text="Output text:" FontSize="20"/>
+                    <TextBlock Text="Output number:" FontSize="20"/>
                     <Border BorderThickness="1" BorderBrush="White" Margin="0,8"
                         Visibility="{Binding ElementName=TextBox_InputNumber, Path=Text, Converter={StaticResource StringToVisibilityConverter}}">
                         <TextBlock Margin="6" Text="{Binding Path=OutputText}" 

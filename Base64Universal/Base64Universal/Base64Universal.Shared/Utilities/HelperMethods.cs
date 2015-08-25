@@ -5,6 +5,7 @@ using Windows.Security.Cryptography;
 using Windows.Storage.Streams;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Linq;
+using System.Globalization;
 
 namespace Base64Universal.Utilities
 {
@@ -42,13 +43,14 @@ namespace Base64Universal.Utilities
         }
         #endregion
 
-        #region hex
+        #region hex Text
         /// <summary>
-        /// Converts the input parameter from string to Hex
+        /// Converts the input parameter from string to Hex. Use this for simple text.
+        /// For numbers use <see cref="StringNumberToHex(string)"/>
         /// </summary>
         /// <param name="plainText"></param>
         /// <returns>The encoded output</returns>
-        public static string ToHex(string plainText)
+        public static string StringTextToHex(string plainText)
         {
             if (!string.IsNullOrEmpty(plainText))
             {
@@ -60,17 +62,18 @@ namespace Base64Universal.Utilities
         }
 
         /// <summary>
-        /// Converts the input parameter from hex to string. Input can have dashes (20-3a-ff etc...)
+        /// Converts the input parameter from hex to string. Use this for simple text.
+        /// For numbers use <see cref="StringNumberToHex(string)"/>
         /// </summary>
         /// <param name="plainText"></param>
         /// <returns>The decoded output</returns>
-        public static string FromHex(string plainText)
+        public static string StringTextFromHex(string plainText)
         {
             // null checking and verify if valid hex
             if (!string.IsNullOrEmpty(plainText))
             {
                 //plainText = plainText.Replace("-", "");
-                if (IsHex(plainText.ToCharArray()))
+                if (plainText.IsHex())
                 {
                     // remeber that each byte is two digits in hex
                     byte[] plainTextBytes = new byte[plainText.Length / 2];
@@ -85,22 +88,44 @@ namespace Base64Universal.Utilities
             return "Not valid input";
         }
 
+        #endregion
+
+        #region hex Number
+
         /// <summary>
-        /// Checks if the input string is valid hex
+        /// Converts the input parameter from string number to Hex number.
+        /// For simple text <see cref="StringTextToHex(string)"/>
         /// </summary>
-        /// <param name="chars"></param>
-        /// <returns>
-        /// <c>true</c> if the specified string is hex; otherwise, <c>false</c>.
-        /// </returns>
-        private static bool IsHex(IEnumerable<char> chars)
+        /// <param name="plainText">If string is a number its int value must not be longer than <see cref="long"/></param>
+        /// <returns>The hex output</returns>
+        public static string StringNumberToHex(string plainText)
         {
-            foreach (var c in chars)
+            if (!string.IsNullOrEmpty(plainText) && plainText.IsDigit())
             {
-                if (!c.IsHex())
-                    return false;
+                long result;
+                if (Int64.TryParse(plainText, out result))
+                    return result.ToString("X");
             }
-            return true;
+            return string.Empty;
         }
+
+        /// <summary>
+        /// Converts the input parameter from string number to Hex number.
+        /// For simple text <see cref="StringTextToHex(string)"/>
+        /// </summary>
+        /// <param name="hexText">If string is a number its int value must not be longer than <see cref="long"/></param>
+        /// <returns>The decimal output</returns>
+        public static string StringNumberFromHex(string hexText)
+        {
+            if (!string.IsNullOrEmpty(hexText) && hexText.IsHex())
+            {
+                long result;
+                if (Int64.TryParse(hexText, System.Globalization.NumberStyles.HexNumber, new CultureInfo("en-US"), out result))
+                    return result.ToString();
+            }
+            return string.Empty;
+        }
+
         #endregion
     }
 }

@@ -101,7 +101,7 @@ namespace Base64Universal.ViewModels
                 case CodingBaseEnum.Base64:
                     return HelperMethods.ToBase64(InputText);
                 case CodingBaseEnum.Hex:
-                    return HelperMethods.ToHex(InputText);
+                    return HelperMethods.StringTextToHex(InputText);
                 default:
                     // something went wrong. return...
                     return "Input text is not in correct format";
@@ -115,7 +115,7 @@ namespace Base64Universal.ViewModels
                 case CodingBaseEnum.Base64:
                     return HelperMethods.FromBase64(InputText);
                 case CodingBaseEnum.Hex:
-                    return HelperMethods.FromHex(InputText);
+                    return HelperMethods.StringTextFromHex(InputText);
                 default:
                     // something went wrong. return...
                     return "Input text is not in correct format";
