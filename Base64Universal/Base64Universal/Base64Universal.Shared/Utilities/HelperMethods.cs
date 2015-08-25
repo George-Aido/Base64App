@@ -50,7 +50,7 @@ namespace Base64Universal.Utilities
         /// <returns>The encoded output</returns>
         public static string ToHex(string plainText)
         {
-            if (!string.IsNullOrEmpty(plainText))
+            if (!string.IsNullOrEmpty(plainText) && IsHex(plainText))
             {
                 var plainTextBytes = Encoding.UTF8.GetBytes(plainText);
                 // remove dashes from hex string
@@ -86,11 +86,11 @@ namespace Base64Universal.Utilities
         }
 
         /// <summary>
-        /// Checks if the input parameter is valid hex
+        /// Checks if the input string is valid hex
         /// </summary>
         /// <param name="chars"></param>
         /// <returns>
-        /// <c>true</c> if the specified chars are hex; otherwise, <c>false</c>.
+        /// <c>true</c> if the specified string is hex; otherwise, <c>false</c>.
         /// </returns>
         private static bool IsHex(IEnumerable<char> chars)
         {
@@ -101,40 +101,6 @@ namespace Base64Universal.Utilities
             }
             return true;
         }
-        #endregion
-
-        #region binary
-        public static string ToBinary(string plainText)
-        {
-            if (!string.IsNullOrEmpty(plainText))
-            {
-                var plainTextBytes = Encoding.Unicode.GetBytes(plainText);
-                return string.Join("", plainText.Select(byt => Convert.ToString(byt, 2).PadLeft(8, '0')));
-            }
-            return string.Empty;
-        }
-
-        public static string FromBinary(string plainText)
-        {
-            if (!string.IsNullOrEmpty(plainText))
-            {
-                var plainTextBytes = new List<Byte>();
-                //return Encoding.Unicode.GetString(plainTextBytes, 0, plainTextBytes.Length);
-                //return string.Join("", plainText.Select(byt => Convert.ToString(byt, 2).PadLeft(8, '0')));
-
-                for (int i = 0; i < plainText.Length; i += 8)
-                {
-                    plainTextBytes.Add(Convert.ToByte(plainText.Substring(i, 8), 2));
-                }
-                return Encoding.Unicode.GetString(plainTextBytes.ToArray(), 0, plainTextBytes.Count);
-
-            }
-            return string.Empty;
-        }
-        #endregion
-
-        #region ascii
-
         #endregion
     }
 }
