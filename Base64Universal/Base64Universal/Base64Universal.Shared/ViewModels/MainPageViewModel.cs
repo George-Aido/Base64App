@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
+using Windows.ApplicationModel.Email;
+using Windows.UI.Popups;
 using Windows.UI.Xaml.Controls;
 
 namespace Base64Universal.ViewModels
@@ -162,13 +164,30 @@ namespace Base64Universal.ViewModels
         public MainPageViewModel()
         {
             ConvertToBaseCommand = new RelayCommand(EncodeOrDecode);
+            SendEmailCommand = new RelayCommand(SendEmail);
+            NavigateToReviewPageCommand = new RelayCommand(NavigateToReviewPage);
+            NavigateToOtherAppsCommand = new RelayCommand(NavigateToOtherApps);
         }
 
 
         public ICommand ConvertToBaseCommand
         {
-            get;
-            private set;
+            get; private set;
+        }
+
+        public ICommand NavigateToReviewPageCommand
+        {
+            get; private set;
+        }
+
+        public ICommand NavigateToOtherAppsCommand
+        {
+            get; private set;
+        }
+
+        public ICommand SendEmailCommand
+        {
+            get; private set;
         }
         private void EncodeOrDecode()
         {
@@ -230,6 +249,38 @@ namespace Base64Universal.ViewModels
                     // something went wrong. return...
                     return "Input text is not in correct format";
             }
+        }
+
+        private async void SendEmail()
+        {
+            string textToSend = (SelectedPivotItem.Tag.ToString() == Constants.TextPivotPage) ? OutputText : OutputNumber;
+            if (string.IsNullOrEmpty(textToSend) || textToSend.Equals(Constants.ErrorMessage))
+            {
+                MessageDialog msgDialog = new MessageDialog("There is nothing in the output field to send");
+                await msgDialog.ShowAsync();
+                return;
+            }
+
+            var emailMessage = new EmailMessage
+            {
+                Subject = "Covnerted with 'Base Converter' for Windows Phone",
+                Body = textToSend + "\n\n\n\n\n\n\n\n\n\n\n\n\nlink to app"
+            };
+
+            // call EmailManager to show the compose UI in the screen
+            await EmailManager.ShowComposeNewEmailAsync(emailMessage);
+        }
+
+        private async void NavigateToReviewPage()
+        {
+            var uri = new Uri(string.Format("ms-windows-store:reviewapp?appid={0}", Windows.ApplicationModel.Package.Current.Id.Name));
+            await Windows.System.Launcher.LaunchUriAsync(uri);
+        }
+
+        private async void NavigateToOtherApps()
+        {
+            var uri = new Uri(string.Format(@"ms-windows-store:search?keyword={0}", "George Aidonidis"));
+            await Windows.System.Launcher.LaunchUriAsync(uri);
         }
     }
 }

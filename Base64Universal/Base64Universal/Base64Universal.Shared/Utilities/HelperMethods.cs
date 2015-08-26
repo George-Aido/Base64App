@@ -24,7 +24,7 @@ namespace Base64Universal.Utilities
                 var plainTextBytes = Encoding.UTF8.GetBytes(plainText);
                 return Convert.ToBase64String(plainTextBytes);
             }
-            return "Not valid input";
+            return Constants.ErrorMessage;
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Base64Universal.Utilities
                 var base64EncodedBytes = Convert.FromBase64String(base64EncodedData);
                 return Encoding.UTF8.GetString(base64EncodedBytes, 0, base64EncodedBytes.Length);
             }
-            return "Not valid input";
+            return Constants.ErrorMessage;
         }
         #endregion
 
@@ -58,7 +58,7 @@ namespace Base64Universal.Utilities
                 // remove dashes from hex string
                 return BitConverter.ToString(plainTextBytes).Replace("-", "");
             }
-            return "Not valid input";
+            return Constants.ErrorMessage;
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace Base64Universal.Utilities
                     return Encoding.UTF8.GetString(plainTextBytes, 0, plainTextBytes.Length);
                 }
             }
-            return "Not valid input";
+            return Constants.ErrorMessage;
         }
 
         #endregion
@@ -112,7 +112,7 @@ namespace Base64Universal.Utilities
                     //Do nothing
                 }
             }
-            return "Not valid input";
+            return Constants.ErrorMessage;
         }
         #endregion
     }

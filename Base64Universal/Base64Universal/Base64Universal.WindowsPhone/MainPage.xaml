@@ -23,15 +23,15 @@
         <CommandBar>
             <CommandBar.SecondaryCommands>
                 <AppBarButton x:Name="AppBarButton_About" Label="about"/>
-                <AppBarButton x:Name="AppBarButton_Rate" Label="rate/review"/>
-                <AppBarButton x:Name="AppBarButton_OtherApps" Label="other apps"/>
+                <AppBarButton x:Name="AppBarButton_Rate" Label="rate/review" Command="{Binding NavigateToReviewPageCommand}"/>
+                <AppBarButton x:Name="AppBarButton_OtherApps" Label="other apps" Command="{Binding NavigateToOtherAppsCommand}"/>
             </CommandBar.SecondaryCommands>
             <AppBarButton x:Name="AppBarButton_Convert" Label="convert" Command="{Binding ConvertToBaseCommand}">
                 <AppBarButton.Icon>
                     <FontIcon Glyph="&#xE201;" FontFamily="Segoe UI Symbol"/>
                 </AppBarButton.Icon>
             </AppBarButton>
-            <AppBarButton x:Name="AppBarButton_Mail" Icon="Mail" Label="mail"/>
+            <AppBarButton x:Name="AppBarButton_Mail" Icon="Mail" Label="mail" Command="{Binding SendEmailCommand}"/>
             <!--<AppBarButton x:Name="AppBarButton_Sms" Icon="Message" Label="sms"/>-->
         </CommandBar>
     </Page.BottomAppBar>

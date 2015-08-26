@@ -15,6 +15,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Constants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\BaseNumberEnumConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\CodingBaseEnumConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\CodingModeEnumConverter.cs" />
