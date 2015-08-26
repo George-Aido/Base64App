@@ -24,7 +24,7 @@ namespace Base64Universal.Utilities
                 var plainTextBytes = Encoding.UTF8.GetBytes(plainText);
                 return Convert.ToBase64String(plainTextBytes);
             }
-            return string.Empty;
+            return "Not valid input";
         }
 
         /// <summary>
@@ -39,7 +39,7 @@ namespace Base64Universal.Utilities
                 var base64EncodedBytes = Convert.FromBase64String(base64EncodedData);
                 return Encoding.UTF8.GetString(base64EncodedBytes, 0, base64EncodedBytes.Length);
             }
-            return string.Empty;
+            return "Not valid input";
         }
         #endregion
 
@@ -58,7 +58,7 @@ namespace Base64Universal.Utilities
                 // remove dashes from hex string
                 return BitConverter.ToString(plainTextBytes).Replace("-", "");
             }
-            return string.Empty;
+            return "Not valid input";
         }
 
         /// <summary>
@@ -90,42 +90,30 @@ namespace Base64Universal.Utilities
 
         #endregion
 
-        #region hex Number
-
+        #region Number
         /// <summary>
-        /// Converts the input parameter from string number to Hex number.
-        /// For simple text <see cref="StringTextToHex(string)"/>
+        /// Converts the input parameter from string number to decimal number.
         /// </summary>
         /// <param name="plainText">If string is a number its int value must not be longer than <see cref="long"/></param>
-        /// <returns>The hex output</returns>
-        public static string StringNumberToHex(string plainText)
-        {
-            if (!string.IsNullOrEmpty(plainText) && plainText.IsDigit())
-            {
-                long result;
-                if (Int64.TryParse(plainText, out result))
-                    return result.ToString("X");
-            }
-            return string.Empty;
-        }
-
-        /// <summary>
-        /// Converts the input parameter from string number to Hex number.
-        /// For simple text <see cref="StringTextToHex(string)"/>
-        /// </summary>
-        /// <param name="hexText">If string is a number its int value must not be longer than <see cref="long"/></param>
+        /// <param name="fromBase">The base of the input value, which must be 2, 8, 10, or 16.</param>
+        /// <param name="toBase">The base of the return value, which must be 2, 8, 10, or 16.</param>
         /// <returns>The decimal output</returns>
-        public static string StringNumberFromHex(string hexText)
+        public static string StringNumberFromBaseToBase(string plainText, int fromBase, int toBase)
         {
-            if (!string.IsNullOrEmpty(hexText) && hexText.IsHex())
+            if (!string.IsNullOrEmpty(plainText) && (plainText.IsDigit() || plainText.IsHex()))
             {
-                long result;
-                if (Int64.TryParse(hexText, System.Globalization.NumberStyles.HexNumber, new CultureInfo("en-US"), out result))
-                    return result.ToString();
+                try
+                {
+                    long binaryNumber = Convert.ToInt64(plainText, fromBase);
+                    return Convert.ToString(binaryNumber, toBase);
+                }
+                catch (Exception)
+                {
+                    //Do nothing
+                }
             }
-            return string.Empty;
+            return "Not valid input";
         }
-
         #endregion
     }
 }

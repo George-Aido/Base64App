@@ -16,6 +16,7 @@
         <converters:StringToVisibilityConverter x:Key="StringToVisibilityConverter"/>
         <converters:CodingBaseEnumConverter x:Key="CodingBaseEnumConverter"/>
         <converters:CodingModeEnumConverter x:Key="CodingModeEnumConverter"/>
+        <converters:BaseNumberEnumConverter x:Key="BaseNumberEnumConverter"/>
     </Page.Resources>
 
     <Page.BottomAppBar>
@@ -35,8 +36,71 @@
         </CommandBar>
     </Page.BottomAppBar>
 
-    <Pivot x:Name="Pivot">
-        <PivotItem Header="Text">
+    <Pivot x:Name="Pivot" SelectionChanged="Pivot_SelectionChanged" SelectedItem="{Binding SelectedPivotItem, Mode=TwoWay}">
+        <PivotItem Header="Number" Tag="Number">
+            <ScrollViewer>
+                <StackPanel x:Name="ContentRootNumber">
+                    <TextBlock Text="Input Number:" FontSize="20"/>
+                    <TextBox x:Name="TextBox_InputNumber" Height="100"
+                         TextWrapping="Wrap" InputScope="Number"
+                         ScrollViewer.VerticalScrollMode="Enabled"
+                             Text="{Binding InputNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBlock Text="Input base:" FontSize="20"/>
+                    <StackPanel Orientation="Horizontal">
+                        <RadioButton Content="Decimal" Tag="Decimal" GroupName="Input"
+                                     IsChecked="{Binding Path=InputNumberBase, Converter={StaticResource BaseNumberEnumConverter}, 
+                                    ConverterParameter=Decimal,
+                                    Mode=TwoWay}"/>
+                        <RadioButton Content="Binary" Tag="Binary" GroupName="Input"
+                                     IsChecked="{Binding Path=InputNumberBase, Converter={StaticResource BaseNumberEnumConverter}, 
+                                    ConverterParameter=Binary,
+                                    Mode=TwoWay}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <RadioButton Content="Octal" Tag="Octal" GroupName="Input"
+                                     IsChecked="{Binding Path=InputNumberBase, Converter={StaticResource BaseNumberEnumConverter}, 
+                                    ConverterParameter=Octal,
+                                    Mode=TwoWay}"/>
+                        <RadioButton Content="Hex" Tag="Hex"  GroupName="Input"
+                                     IsChecked="{Binding Path=InputNumberBase, Converter={StaticResource BaseNumberEnumConverter}, 
+                                    ConverterParameter=Hex,
+                                    Mode=TwoWay}"/>
+                    </StackPanel>
+                    <TextBlock Text="Output base:" FontSize="20"/>
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <RadioButton Content="Decimal" Tag="Decimal" GroupName="Output"
+                                         IsChecked="{Binding Path=OutputNumberBase, Converter={StaticResource BaseNumberEnumConverter}, 
+                                    ConverterParameter=Decimal,
+                                    Mode=TwoWay}"/>
+                            <RadioButton Content="Binary" Tag="Binary" GroupName="Output"
+                                         IsChecked="{Binding Path=OutputNumberBase, Converter={StaticResource BaseNumberEnumConverter}, 
+                                    ConverterParameter=Binary,
+                                    Mode=TwoWay}"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <RadioButton Content="Octal" Tag="Octal" GroupName="Output"
+                                         IsChecked="{Binding Path=OutputNumberBase, Converter={StaticResource BaseNumberEnumConverter}, 
+                                    ConverterParameter=Octal,
+                                    Mode=TwoWay}"/>
+                            <RadioButton Content="Hex" Tag="Hex"  GroupName="Output"
+                                         IsChecked="{Binding Path=OutputNumberBase, Converter={StaticResource BaseNumberEnumConverter}, 
+                                    ConverterParameter=Hex,
+                                    Mode=TwoWay}"/>
+                        </StackPanel>
+                    </StackPanel>
+                    <TextBlock Text="Output number:" FontSize="20"/>
+                    <Border BorderThickness="1" BorderBrush="White" Margin="0,8"
+                        Visibility="{Binding ElementName=TextBlock_OutputNumber, 
+                        Path=Text, Converter={StaticResource StringToVisibilityConverter}}">
+                        <TextBlock x:Name="TextBlock_OutputNumber" Margin="6" Text="{Binding Path=OutputNumber}" 
+                           TextWrapping="Wrap" FontSize="18"
+                                   IsTextSelectionEnabled="True"/>
+                    </Border>
+                </StackPanel>
+            </ScrollViewer>
+        </PivotItem>
+        <PivotItem Header="Text" Tag="Text">
             <ScrollViewer>
                 <StackPanel x:Name="ContentRoot">
                     <TextBlock Text="Input Text:" FontSize="20"/>
@@ -48,11 +112,11 @@
                     <StackPanel Orientation="Horizontal">
                         <RadioButton Content="Base64" Tag="Base64"  
                                      GroupName="Mode" 
-                                     IsChecked="{Binding Path=BaseCode, Converter={StaticResource CodingBaseEnumConverter}, 
+                                     IsChecked="{Binding Path=BaseTextCode, Converter={StaticResource CodingBaseEnumConverter}, 
                             ConverterParameter=Base64,
                             Mode=TwoWay}"/>
                         <RadioButton Content="Hex" Tag="Hex" GroupName="Mode"
-                                     IsChecked="{Binding Path=BaseCode, Converter={StaticResource CodingBaseEnumConverter}, 
+                                     IsChecked="{Binding Path=BaseTextCode, Converter={StaticResource CodingBaseEnumConverter}, 
                             ConverterParameter=Hex,
                             Mode=TwoWay}"/>
                     </StackPanel>
@@ -73,38 +137,6 @@
                         Path=Text, Converter={StaticResource StringToVisibilityConverter}}">
                         <TextBlock x:Name="TextBlock_Output" Margin="6" Text="{Binding OutputText}" 
                            TextWrapping="Wrap" FontSize="18" IsTextSelectionEnabled="True"/>
-                    </Border>
-                </StackPanel>
-            </ScrollViewer>
-        </PivotItem>
-        <PivotItem Header="Number">
-            <ScrollViewer>
-                <StackPanel x:Name="ContentRootNumber">
-                    <TextBlock Text="Input Number:" FontSize="20"/>
-                    <TextBox x:Name="TextBox_InputNumber" Height="100"
-                         TextWrapping="Wrap" InputScope="Number"
-                         ScrollViewer.VerticalScrollMode="Enabled"
-                             Text="{Binding InputText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    <TextBlock Text="Coding base:" FontSize="20"/>
-                    <StackPanel Orientation="Horizontal">
-                        <RadioButton Content="Hex" Tag="Hex"  GroupName="Mode2" IsChecked="True"/>
-                        <RadioButton Content="Octal" Tag="Octal" GroupName="Mode2"/>
-                    </StackPanel>
-                    <StackPanel Orientation="Horizontal">
-                        <RadioButton Content="Decimal" Tag="Decimal" GroupName="Mode2"/>
-                        <RadioButton Content="Binary" Tag="Binary" GroupName="Mode2"/>
-                    </StackPanel>
-                    <TextBlock Text="Coding options:" FontSize="20"/>
-                    <StackPanel Orientation="Horizontal">
-                        <RadioButton Content="Encode" GroupName="Option2" IsChecked="True"/>
-                        <RadioButton Content="Decode" GroupName="Option2"/>
-                    </StackPanel>
-                    <TextBlock Text="Output number:" FontSize="20"/>
-                    <Border BorderThickness="1" BorderBrush="White" Margin="0,8"
-                        Visibility="{Binding ElementName=TextBox_InputNumber, Path=Text, Converter={StaticResource StringToVisibilityConverter}}">
-                        <TextBlock Margin="6" Text="{Binding Path=OutputText}" 
-                           TextWrapping="Wrap" FontSize="18"
-                                   IsTextSelectionEnabled="True"/>
                     </Border>
                 </StackPanel>
             </ScrollViewer>

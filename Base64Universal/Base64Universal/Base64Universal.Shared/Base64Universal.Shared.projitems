@@ -15,10 +15,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\BaseNumberEnumConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\CodingBaseEnumConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\CodingModeEnumConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Converters\StringToVisibilityConverter.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Enums\CodingBaseEnum.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Enums\CodingNumberBaseEnum.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Enums\CodingTextBaseEnum.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Enums\CodingModeEnum.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\Extensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\HelperMethods.cs" />

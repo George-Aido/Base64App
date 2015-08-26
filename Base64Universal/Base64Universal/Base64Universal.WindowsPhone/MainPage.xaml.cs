@@ -1,5 +1,5 @@
 ﻿using Base64Universal.Common;
-using Base64Universal.Utilities;
+using Base64Universal.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -22,7 +22,7 @@ namespace Base64Universal
     public sealed partial class MainPage : Page
     {
         private NavigationHelper navigationHelper;
-        private ObservableDictionary defaultViewModel = new ObservableDictionary();
+        private MainPageViewModel viewModel = new MainPageViewModel();
 
         public MainPage()
         {
@@ -38,15 +38,15 @@ namespace Base64Universal
             get { return this.navigationHelper; }
         }
 
-        public ObservableDictionary DefaultViewModel
+        public MainPageViewModel ViewModel
         {
-            get { return this.defaultViewModel; }
+            get { return this.viewModel; }
         }
 
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
         {
         }
-
+        
         private void NavigationHelper_SaveState(object sender, SaveStateEventArgs e)
         {
         }
@@ -77,5 +77,11 @@ namespace Base64Universal
         }
 
         #endregion
+
+        private void Pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine(Pivot.SelectedIndex);
+            System.Diagnostics.Debug.WriteLine((Pivot.SelectedItem as PivotItem).Tag);
+        }
     }
 }

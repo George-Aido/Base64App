@@ -5,20 +5,53 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
+using Windows.UI.Xaml.Controls;
 
 namespace Base64Universal.ViewModels
 {
     public class MainPageViewModel : ViewModelBase
     {
-        private CodingBaseEnum baseCode;
-        public CodingBaseEnum BaseCode
+#if WINDOWS_PHONE_APP
+        private PivotItem selectedPivotItem;
+
+        public PivotItem SelectedPivotItem
         {
-            get { return baseCode; }
+            get { return selectedPivotItem; }
             set
             {
-                if (value != baseCode)
+                if (value != selectedPivotItem)
                 {
-                    baseCode = value;
+                    selectedPivotItem = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+#else
+        private string selectedPivotItem;
+
+        public string SelectedPivotItem
+        {
+            get { return selectedPivotItem; }
+            set
+            {
+                if (value != selectedPivotItem)
+                {
+                    selectedPivotItem = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+#endif
+
+        private CodingTextBaseEnum baseTextCode;
+        public CodingTextBaseEnum BaseTextCode
+        {
+            get { return baseTextCode; }
+            set
+            {
+                if (value != baseTextCode)
+                {
+                    baseTextCode = value;
                     NotifyPropertyChanged();
                 }
             }
@@ -38,6 +71,35 @@ namespace Base64Universal.ViewModels
             }
         }
 
+        private CodingNumberBaseEnum inputNumberBase = CodingNumberBaseEnum.Decimal;
+
+        public CodingNumberBaseEnum InputNumberBase
+        {
+            get { return inputNumberBase; }
+            set
+            {
+                if (value != inputNumberBase)
+                {
+                    inputNumberBase = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        private CodingNumberBaseEnum outputNumberBase = CodingNumberBaseEnum.Decimal;
+
+        public CodingNumberBaseEnum OutputNumberBase
+        {
+            get { return outputNumberBase; }
+            set
+            {
+                if (value != outputNumberBase)
+                {
+                    outputNumberBase = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
 
         private string inputText;
         public string InputText
@@ -67,6 +129,36 @@ namespace Base64Universal.ViewModels
             }
         }
 
+        private string inputNumber;
+
+        public string InputNumber
+        {
+            get { return inputNumber; }
+            set
+            {
+                if (value != inputNumber)
+                {
+                    inputNumber = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        private string outputNumber;
+
+        public string OutputNumber
+        {
+            get { return outputNumber; }
+            set
+            {
+                if (value != outputNumber)
+                {
+                    outputNumber = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
         public MainPageViewModel()
         {
             ConvertToBaseCommand = new RelayCommand(EncodeOrDecode);
@@ -80,27 +172,45 @@ namespace Base64Universal.ViewModels
         }
         private void EncodeOrDecode()
         {
+#if WINDOWS_PHONE_APP
+            switch (SelectedPivotItem.Tag.ToString())
+            {
+                case "Number":
+                    OutputNumber = HelperMethods.StringNumberFromBaseToBase(InputNumber, (int)InputNumberBase, (int)OutputNumberBase);
+                    break;
+                case "Text":
+                    OutputText = ConvertText();
+                    break;
+                default:
+                    // do nothing
+                    return;
+            }
+#else
+#endif
+        }
+
+        private string ConvertText()
+        {
             switch (CodingMode)
             {
                 case CodingModeEnum.Encode:
-                    OutputText = ToBase();
+                    return ToTextBase();
                     break;
                 case CodingModeEnum.Decode:
-                    OutputText = FromBase();
-                    break;
+                    return FromTextBase();
                 default:
                     // something went wrong. return...
-                    return;
+                    return "error";
             }
         }
 
-        private string ToBase()
+        private string ToTextBase()
         {
-            switch (BaseCode)
+            switch (BaseTextCode)
             {
-                case CodingBaseEnum.Base64:
+                case CodingTextBaseEnum.Base64:
                     return HelperMethods.ToBase64(InputText);
-                case CodingBaseEnum.Hex:
+                case CodingTextBaseEnum.Hex:
                     return HelperMethods.StringTextToHex(InputText);
                 default:
                     // something went wrong. return...
@@ -108,13 +218,13 @@ namespace Base64Universal.ViewModels
             }
         }
 
-        private string FromBase()
+        private string FromTextBase()
         {
-            switch (BaseCode)
+            switch (BaseTextCode)
             {
-                case CodingBaseEnum.Base64:
+                case CodingTextBaseEnum.Base64:
                     return HelperMethods.FromBase64(InputText);
-                case CodingBaseEnum.Hex:
+                case CodingTextBaseEnum.Hex:
                     return HelperMethods.StringTextFromHex(InputText);
                 default:
                     // something went wrong. return...

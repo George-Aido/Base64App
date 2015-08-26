@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Base64Universal.Enums
 {
-    public enum CodingBaseEnum
+    public enum CodingTextBaseEnum
     {
         Base64, Hex
     };
