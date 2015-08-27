@@ -19,12 +19,12 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Base64Universal
 {
-    public sealed partial class MainPage : Page
+    public sealed partial class AboutPage : Page
     {
         private NavigationHelper navigationHelper;
-        private MainPageViewModel viewModel = new MainPageViewModel();
+        private AboutPageViewModel viewModel = new AboutPageViewModel();
 
-        public MainPage()
+        public AboutPage()
         {
             this.InitializeComponent();
 
@@ -38,9 +38,9 @@ namespace Base64Universal
             get { return this.navigationHelper; }
         }
 
-        public MainPageViewModel ViewModel
+        public AboutPageViewModel ViewModel
         {
-            get { return this.viewModel; }
+            get { return viewModel; }
         }
 
         private void NavigationHelper_LoadState(object sender, LoadStateEventArgs e)
@@ -78,33 +78,5 @@ namespace Base64Universal
 
         #endregion
 
-        private void Pivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            System.Diagnostics.Debug.WriteLine(Pivot.SelectedIndex);
-            System.Diagnostics.Debug.WriteLine((Pivot.SelectedItem as PivotItem).Tag);
-        }
-
-        private void AppBarButton_About_Click(object sender, RoutedEventArgs e)
-        {
-            Frame.Navigate(typeof(AboutPage));
-        }
-
-        private void RadioButton_Checked(object sender, RoutedEventArgs e)
-        {
-            if ((sender as RadioButton).Tag.ToString() == Constants.Hex)
-            {
-                TextBox_InputNumber.Visibility = Visibility.Collapsed;
-                TextBox_InputNumber_ForHex.Visibility = Visibility.Visible;
-                if (!string.IsNullOrEmpty(TextBox_InputNumber_ForHex.Text))
-                    TextBox_InputNumber_ForHex.Focus(FocusState.Programmatic);
-            }
-            else
-            {
-                TextBox_InputNumber_ForHex.Visibility = Visibility.Collapsed;
-                TextBox_InputNumber.Visibility = Visibility.Visible;
-                if (!string.IsNullOrEmpty(TextBox_InputNumber.Text))
-                    TextBox_InputNumber.Focus(FocusState.Programmatic);
-            }
-        }
     }
 }

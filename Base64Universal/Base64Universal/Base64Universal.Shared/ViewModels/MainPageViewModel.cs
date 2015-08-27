@@ -5,9 +5,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
-using Windows.ApplicationModel.Email;
 using Windows.UI.Popups;
 using Windows.UI.Xaml.Controls;
+#if WINDOWS_PHONE_APP
+using Windows.ApplicationModel.Email;
+#endif
 
 namespace Base64Universal.ViewModels
 {
@@ -194,10 +196,14 @@ namespace Base64Universal.ViewModels
 #if WINDOWS_PHONE_APP
             switch (SelectedPivotItem.Tag.ToString())
             {
-                case "Number":
+                case Constants.NumberPivotPage:
                     OutputNumber = HelperMethods.StringNumberFromBaseToBase(InputNumber, (int)InputNumberBase, (int)OutputNumberBase);
+                    if (InputNumberBase == CodingNumberBaseEnum.Hex)
+                    {
+
+                    }
                     break;
-                case "Text":
+                case Constants.TextPivotPage:
                     OutputText = ConvertText();
                     break;
                 default:
@@ -214,7 +220,6 @@ namespace Base64Universal.ViewModels
             {
                 case CodingModeEnum.Encode:
                     return ToTextBase();
-                    break;
                 case CodingModeEnum.Decode:
                     return FromTextBase();
                 default:
@@ -253,6 +258,7 @@ namespace Base64Universal.ViewModels
 
         private async void SendEmail()
         {
+#if WINDOWS_PHONE_APP
             string textToSend = (SelectedPivotItem.Tag.ToString() == Constants.TextPivotPage) ? OutputText : OutputNumber;
             if (string.IsNullOrEmpty(textToSend) || textToSend.Equals(Constants.ErrorMessage))
             {
@@ -269,6 +275,7 @@ namespace Base64Universal.ViewModels
 
             // call EmailManager to show the compose UI in the screen
             await EmailManager.ShowComposeNewEmailAsync(emailMessage);
+#endif
         }
 
         private async void NavigateToReviewPage()
@@ -279,7 +286,7 @@ namespace Base64Universal.ViewModels
 
         private async void NavigateToOtherApps()
         {
-            var uri = new Uri(string.Format(@"ms-windows-store:search?keyword={0}", "George Aidonidis"));
+            var uri = new Uri(string.Format(@"ms-windows-store:search?keyword={0}", Constants.GeorgeAidonidis));
             await Windows.System.Launcher.LaunchUriAsync(uri);
         }
     }

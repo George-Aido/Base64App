@@ -22,7 +22,7 @@
     <Page.BottomAppBar>
         <CommandBar>
             <CommandBar.SecondaryCommands>
-                <AppBarButton x:Name="AppBarButton_About" Label="about"/>
+                <AppBarButton x:Name="AppBarButton_About" Label="about" Click="AppBarButton_About_Click"/>
                 <AppBarButton x:Name="AppBarButton_Rate" Label="rate/review" Command="{Binding NavigateToReviewPageCommand}"/>
                 <AppBarButton x:Name="AppBarButton_OtherApps" Label="other apps" Command="{Binding NavigateToOtherAppsCommand}"/>
             </CommandBar.SecondaryCommands>
@@ -42,29 +42,35 @@
                 <StackPanel x:Name="ContentRootNumber">
                     <TextBlock Text="Input Number:" FontSize="20"/>
                     <TextBox x:Name="TextBox_InputNumber" Height="100"
-                         TextWrapping="Wrap" InputScope="Number"
-                         ScrollViewer.VerticalScrollMode="Enabled"
+                         TextWrapping="Wrap"                              
+                             InputScope="Number"
+                             ScrollViewer.VerticalScrollMode="Enabled"
+                             Text="{Binding InputNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox x:Name="TextBox_InputNumber_ForHex" Height="100" Visibility="Collapsed"
+                         TextWrapping="Wrap"                              
+                             InputScope="Default"
+                             ScrollViewer.VerticalScrollMode="Enabled"
                              Text="{Binding InputNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     <TextBlock Text="Input base:" FontSize="20"/>
                     <StackPanel Orientation="Horizontal">
                         <RadioButton Content="Decimal" Tag="Decimal" GroupName="Input"
                                      IsChecked="{Binding Path=InputNumberBase, Converter={StaticResource BaseNumberEnumConverter}, 
                                     ConverterParameter=Decimal,
-                                    Mode=TwoWay}"/>
+                                    Mode=TwoWay}" Checked="RadioButton_Checked"/>
                         <RadioButton Content="Binary" Tag="Binary" GroupName="Input"
                                      IsChecked="{Binding Path=InputNumberBase, Converter={StaticResource BaseNumberEnumConverter}, 
                                     ConverterParameter=Binary,
-                                    Mode=TwoWay}"/>
+                                    Mode=TwoWay}" Checked="RadioButton_Checked"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
                         <RadioButton Content="Octal" Tag="Octal" GroupName="Input"
                                      IsChecked="{Binding Path=InputNumberBase, Converter={StaticResource BaseNumberEnumConverter}, 
                                     ConverterParameter=Octal,
-                                    Mode=TwoWay}"/>
+                                    Mode=TwoWay}" Checked="RadioButton_Checked"/>
                         <RadioButton Content="Hex" Tag="Hex"  GroupName="Input"
                                      IsChecked="{Binding Path=InputNumberBase, Converter={StaticResource BaseNumberEnumConverter}, 
                                     ConverterParameter=Hex,
-                                    Mode=TwoWay}"/>
+                                    Mode=TwoWay}" Checked="RadioButton_Checked"/>
                     </StackPanel>
                     <TextBlock Text="Output base:" FontSize="20"/>
                     <StackPanel>
@@ -72,7 +78,7 @@
                             <RadioButton Content="Decimal" Tag="Decimal" GroupName="Output"
                                          IsChecked="{Binding Path=OutputNumberBase, Converter={StaticResource BaseNumberEnumConverter}, 
                                     ConverterParameter=Decimal,
-                                    Mode=TwoWay}"/>
+                                    Mode=TwoWay}" />
                             <RadioButton Content="Binary" Tag="Binary" GroupName="Output"
                                          IsChecked="{Binding Path=OutputNumberBase, Converter={StaticResource BaseNumberEnumConverter}, 
                                     ConverterParameter=Binary,
@@ -107,7 +113,8 @@
                     <TextBox x:Name="TextBox_InputText" Height="100"
                          TextWrapping="Wrap"
                          ScrollViewer.VerticalScrollMode="Enabled"
-                             Text="{Binding InputText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                             Text="{Binding InputText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                             InputScope="Default" IsTextPredictionEnabled="False"/>
                     <TextBlock Text="Coding base:" FontSize="20"/>
                     <StackPanel Orientation="Horizontal">
                         <RadioButton Content="Base64" Tag="Base64"  

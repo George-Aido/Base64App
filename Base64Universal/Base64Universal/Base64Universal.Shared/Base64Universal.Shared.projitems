@@ -27,6 +27,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\HelperMethods.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Utilities\RelayCommandT.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModelBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\AboutPageViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainPageViewModel.cs" />
   </ItemGroup>
 </Project>
