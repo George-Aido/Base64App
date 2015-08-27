@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>57f6158e-0184-44f3-891e-28744fc48411</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>BaseConverter</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="$(MSBuildThisFileDirectory)App.xaml">
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Constants.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\BaseNumberEnumConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\CodingBaseEnumConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\CodingModeEnumConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Converters\StringToVisibilityConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Enums\CodingNumberBaseEnum.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Enums\CodingTextBaseEnum.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Enums\CodingModeEnum.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utilities\Extensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utilities\HelperMethods.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Utilities\RelayCommandT.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModelBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\AboutPageViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MainPageViewModel.cs" />
+  </ItemGroup>
+</Project>
