@@ -167,22 +167,10 @@ namespace BaseConverter.ViewModels
         {
             ConvertToBaseCommand = new RelayCommand(EncodeOrDecode);
             SendEmailCommand = new RelayCommand(SendEmail);
-            NavigateToReviewPageCommand = new RelayCommand(NavigateToReviewPage);
-            NavigateToOtherAppsCommand = new RelayCommand(NavigateToOtherApps);
         }
 
 
         public ICommand ConvertToBaseCommand
-        {
-            get; private set;
-        }
-
-        public ICommand NavigateToReviewPageCommand
-        {
-            get; private set;
-        }
-
-        public ICommand NavigateToOtherAppsCommand
         {
             get; private set;
         }
@@ -238,7 +226,7 @@ namespace BaseConverter.ViewModels
                     return HelperMethods.StringTextToHex(InputText);
                 default:
                     // something went wrong. return...
-                    return "Input text is not in correct format";
+                    return Constants.MainPageError;
             }
         }
 
@@ -252,7 +240,7 @@ namespace BaseConverter.ViewModels
                     return HelperMethods.StringTextFromHex(InputText);
                 default:
                     // something went wrong. return...
-                    return "Input text is not in correct format";
+                    return Constants.MainPageError;
             }
         }
 
@@ -270,24 +258,12 @@ namespace BaseConverter.ViewModels
             var emailMessage = new EmailMessage
             {
                 Subject = "Covnerted with 'Base Converter' for Windows Phone",
-                Body = textToSend + "\n\n\n\n\n\n\n\n\n\n\n\n\nlink to app"
+                Body = "\n\nMessage: " + textToSend + "\n\n\n\n\n\n\n\n\n\n\n\n\nlink to app"
             };
 
             // call EmailManager to show the compose UI in the screen
             await EmailManager.ShowComposeNewEmailAsync(emailMessage);
 #endif
-        }
-
-        private async void NavigateToReviewPage()
-        {
-            var uri = new Uri(string.Format("ms-windows-store:reviewapp?appid={0}", Windows.ApplicationModel.Package.Current.Id.Name));
-            await Windows.System.Launcher.LaunchUriAsync(uri);
-        }
-
-        private async void NavigateToOtherApps()
-        {
-            var uri = new Uri(string.Format(@"ms-windows-store:search?keyword={0}", Constants.GeorgeAidonidis));
-            await Windows.System.Launcher.LaunchUriAsync(uri);
         }
     }
 }

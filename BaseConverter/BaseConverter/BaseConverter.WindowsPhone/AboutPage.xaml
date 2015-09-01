@@ -14,6 +14,10 @@
 
     <Page.BottomAppBar>
         <CommandBar>
+            <CommandBar.SecondaryCommands>
+                <AppBarButton x:Name="AppBarButton_Rate" Label="rate/review" Command="{Binding NavigateToReviewPageCommand}"/>
+                <AppBarButton x:Name="AppBarButton_OtherApps" Label="other apps" Command="{Binding NavigateToOtherAppsCommand}"/>
+            </CommandBar.SecondaryCommands>
             <AppBarButton x:Name="AppBarButton_Contact" Icon="Mail" Label="contact"
                           Command="{Binding ContactCommand}"/>
         </CommandBar>

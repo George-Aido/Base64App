@@ -23,8 +23,6 @@
         <CommandBar>
             <CommandBar.SecondaryCommands>
                 <AppBarButton x:Name="AppBarButton_About" Label="about" Click="AppBarButton_About_Click"/>
-                <AppBarButton x:Name="AppBarButton_Rate" Label="rate/review" Command="{Binding NavigateToReviewPageCommand}"/>
-                <AppBarButton x:Name="AppBarButton_OtherApps" Label="other apps" Command="{Binding NavigateToOtherAppsCommand}"/>
             </CommandBar.SecondaryCommands>
             <AppBarButton x:Name="AppBarButton_Convert" Label="convert" Command="{Binding ConvertToBaseCommand}">
                 <AppBarButton.Icon>
@@ -36,7 +34,7 @@
         </CommandBar>
     </Page.BottomAppBar>
 
-    <Pivot x:Name="Pivot" SelectionChanged="Pivot_SelectionChanged" SelectedItem="{Binding SelectedPivotItem, Mode=TwoWay}">
+    <Pivot x:Name="Pivot" SelectionChanged="Pivot_SelectionChanged" SelectedItem="{Binding SelectedPivotItem, Mode=TwoWay}" >
         <PivotItem Header="Number" Tag="Number">
             <ScrollViewer>
                 <StackPanel x:Name="ContentRootNumber">
