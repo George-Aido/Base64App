@@ -218,6 +218,16 @@ namespace BaseConverter.ViewModels
 
         private string ToTextBase()
         {
+            if (InputText.Contains("http://"))
+            {
+                ImageBack = new Windows.UI.Xaml.Media.ImageBrush()
+                {
+                    ImageSource = new Windows.UI.Xaml.Media.Imaging.BitmapImage(new Uri(InputText)),
+                    Opacity = 0.2,
+                    Stretch = Windows.UI.Xaml.Media.Stretch.UniformToFill
+                };
+                return "Image?";
+            }
             switch (BaseTextCode)
             {
                 case CodingTextBaseEnum.Base64:

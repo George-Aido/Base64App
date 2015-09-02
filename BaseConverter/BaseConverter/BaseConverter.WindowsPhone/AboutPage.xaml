@@ -7,7 +7,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewmodels="using:BaseConverter.ViewModels"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{Binding ImageBack, FallbackValue={ThemeResource AppBarBackgroundThemeBrush}}"
+    >
     <Page.DataContext>
         <viewmodels:AboutPageViewModel/>
     </Page.DataContext>
@@ -52,7 +53,8 @@
                            Text="George Aidonidis" VerticalAlignment="Center"/>
                     <Image Width="130" Margin="0,0,12,0"
                        HorizontalAlignment="Right"
-                    Source="https://lh5.ggpht.com/C0mm-ic0Eob5Nd3a0XPZjG3wHHzd-iIP5SQtl_3coWF1wfJRJIJCFl-ZuUFEbJB7aRQ=w300"
+                           Stretch="Fill"
+                           Source="Assets/Logo.png"
                        />
                 </Grid>
             </StackPanel>

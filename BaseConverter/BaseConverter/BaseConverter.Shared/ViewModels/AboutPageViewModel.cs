@@ -9,7 +9,7 @@ using Windows.ApplicationModel.Email;
 
 namespace BaseConverter.ViewModels
 {
-    public class AboutPageViewModel
+    public class AboutPageViewModel : ViewModelBase
     {
         public ICommand ContactCommand
         { get; private set; }
