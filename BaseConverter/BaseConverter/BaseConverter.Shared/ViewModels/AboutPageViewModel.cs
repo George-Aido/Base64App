@@ -36,7 +36,7 @@ namespace BaseConverter.ViewModels
 #if WINDOWS_PHONE_APP
             var emailMessage = new EmailMessage
             {
-                Subject = "Windows Phone 'Base Converter' feedback"
+                Subject = "Windows Phone 'Message Decoder' feedback"
             };
             emailMessage.To.Add(new EmailRecipient(Constants.OutlookEmail, Constants.GeorgeAidonidis));
             // call EmailManager to show the compose UI in the screen

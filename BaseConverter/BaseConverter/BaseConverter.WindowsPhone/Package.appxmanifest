@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest" xmlns:m3="http://schemas.microsoft.com/appx/2014/manifest" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest">
-  <Identity Name="45015GeorgeAidonidis.MessageDecoder" Publisher="CN=7590D3D6-7D9D-42B7-BF03-29D3A233228A" Version="1.1.0.0" />
-  <mp:PhoneIdentity PhoneProductId="acb13fbf-af60-4721-b972-8cb0cbf55825" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
+  <Identity Name="45015GeorgeAidonidis.MessageDecoder" Publisher="CN=7590D3D6-7D9D-42B7-BF03-29D3A233228A" Version="1.1.0.1" />
+  <mp:PhoneIdentity PhoneProductId="12015ec2-e870-400e-a622-37d62ff87593" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>Message Decoder</DisplayName>
     <PublisherDisplayName>George Aidonidis</PublisherDisplayName>

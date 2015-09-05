@@ -35,7 +35,7 @@
             <StackPanel Grid.Row="0" Margin="19,0,0,0">
                 <TextBlock Text="about" Margin="0,-6.5,12,26.5" Style="{ThemeResource HeaderTextBlockStyle}" CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}"/>
                 <TextBlock Margin="12, 0" Style="{ThemeResource BodyTextBlockStyle}" CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}">
-                This app application helps you convert text or numbers to another base.
+                This application helps you encode or decode your messages. These messages can be numbers or text. Please, choose the correct page for that.
                 </TextBlock>
                 <TextBlock Margin="12, 0" Style="{ThemeResource BodyTextBlockStyle}" CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}">
                 <LineBreak/>&#x2022; Text pivot page supports Base64 and Hex conversion (please, keep in mind that Hex conversion here is not the same as number).
