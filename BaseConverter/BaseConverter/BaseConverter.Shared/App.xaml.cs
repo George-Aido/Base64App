@@ -61,8 +61,9 @@ namespace BaseConverter
             if (rootFrame == null)
             {
                 // Create a Frame to act as the navigation context and navigate to the first page
-                rootFrame = new Frame();
-
+                //rootFrame = new Frame();
+                rootFrame = new Frame { Background = new ImageBrush() { ImageSource = new Windows.UI.Xaml.Media.Imaging.BitmapImage(
+                    new Uri("ms-appx:///Assets/backImage.jpg", UriKind.Absolute)), Stretch = Stretch.Fill, Opacity = 0.3, AlignmentX = AlignmentX.Center, AlignmentY = AlignmentY.Center } };
                 // TODO: change this value to a cache size that is appropriate for your application
                 rootFrame.CacheSize = 1;
 

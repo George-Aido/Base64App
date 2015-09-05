@@ -257,8 +257,8 @@ namespace BaseConverter.ViewModels
 
             var emailMessage = new EmailMessage
             {
-                Subject = "Covnerted with 'Base Converter' for Windows Phone",
-                Body = "\n\nMessage: " + textToSend + "\n\n\n\n\n\n\n\n\n\n\n\n\nlink to app"
+                Subject = "Covnerted with 'Message Decoder' for Windows Phone",
+                Body = "\n\nMessage: " + textToSend
             };
 
             // call EmailManager to show the compose UI in the screen

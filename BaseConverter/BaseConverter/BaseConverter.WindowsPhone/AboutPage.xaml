@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewmodels="using:BaseConverter.ViewModels"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="Transparent">
     <Page.DataContext>
         <viewmodels:AboutPageViewModel/>
     </Page.DataContext>
@@ -41,18 +41,22 @@
                 <LineBreak/>&#x2022; Text pivot page supports Base64 and Hex conversion (please, keep in mind that Hex conversion here is not the same as number).
                 </TextBlock>
                 <TextBlock Margin="12, 0" Style="{ThemeResource BodyTextBlockStyle}" CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}">
-                <LineBreak/>&#x2022; Number pivot page supports conversion from/to Decimal, Binary, Octal and Hex bases. Input scope of the textbox changes accordingly to improve user interface.
+                <LineBreak/>&#x2022; Number pivot page supports conversion from/to Decimal, Binary, Octal and Hex bases. Input scope of the textbox changes accordingly to improve user experience.
                 </TextBlock>
                 <TextBlock Margin="12, 0" Style="{ThemeResource BodyTextBlockStyle}" CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}">
-                <LineBreak/>Feel free to contact me for any feedback/suggestions.
+                <LineBreak/>&#x2022; You can also share the output text by email. The application is smart enough to detect the correct output text based on the pivot page the user is at that moment.
+                </TextBlock>
+                <TextBlock Margin="12, 0" Style="{ThemeResource BodyTextBlockStyle}" CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}">
+                <LineBreak/>
+                    <LineBreak/><LineBreak/>
+                    Feel free to contact me for any feedback/suggestions or support.
 
                 </TextBlock>
                 <Grid Margin="0, 32">
                     <TextBlock Margin="12, 0" Style="{ThemeResource BodyTextBlockStyle}" CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}"
                            Text="George Aidonidis" VerticalAlignment="Center"/>
                     <Image Width="130" Margin="0,0,12,0"
-                       HorizontalAlignment="Right"
-                    Source="https://lh5.ggpht.com/C0mm-ic0Eob5Nd3a0XPZjG3wHHzd-iIP5SQtl_3coWF1wfJRJIJCFl-ZuUFEbJB7aRQ=w300"
+                       HorizontalAlignment="Right" Source="Assets/Logo.png"                    
                        />
                 </Grid>
             </StackPanel>
