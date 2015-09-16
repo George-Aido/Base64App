@@ -112,7 +112,7 @@
                          TextWrapping="Wrap"
                          ScrollViewer.VerticalScrollMode="Enabled"
                              Text="{Binding InputText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                             InputScope="Default" IsTextPredictionEnabled="False"/>
+                             InputScope="Default" />
                     <TextBlock Text="Coding base:" FontSize="20"/>
                     <StackPanel Orientation="Horizontal">
                         <RadioButton Content="Base64" Tag="Base64"  
