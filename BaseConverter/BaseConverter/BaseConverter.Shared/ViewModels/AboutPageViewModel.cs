@@ -46,7 +46,7 @@ namespace BaseConverter.ViewModels
 
         private async void NavigateToReviewPage()
         {
-            var uri = new Uri(string.Format("ms-windows-store:reviewapp?appid={0}", Windows.ApplicationModel.Package.Current.Id.Name));
+            var uri = new Uri(string.Format("ms-windows-store:reviewapp?appid={0}", Windows.ApplicationModel.Store.CurrentApp.AppId));
             await Windows.System.Launcher.LaunchUriAsync(uri);
         }
 
